@@ -6,9 +6,9 @@ import threading
 import time
 import sys, os
 
-from PyQt6 import QtGui
-from PyQt6.QtCore import QSize, Qt, QRunnable, QThreadPool, QMetaObject, Q_ARG
-from PyQt6.QtWidgets import *
+from PyQt5 import QtGui
+from PyQt5.QtCore import QSize, Qt, QRunnable, QThreadPool, QMetaObject, Q_ARG
+from PyQt5.QtWidgets import *
 
 basedir = os.path.dirname(__file__)
 viewModel = domain.MainViewModel()

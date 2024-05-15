@@ -1,3 +1,4 @@
+from __future__ import annotations
 import usb.core
 import usb.util
 
@@ -84,21 +85,21 @@ class MainViewModel():
     def sync_time(self):
 
         date = datetime.now()
-        payload = list(date.year.to_bytes(2))
-        payload += list(date.month.to_bytes(1))
-        payload += list(date.day.to_bytes(1))
-        payload += list(date.hour.to_bytes(1))
-        payload += list(date.minute.to_bytes(1))
-        payload += list(date.second.to_bytes(1))
+        payload = list(date.year.to_bytes(2, 'big'))
+        payload += list(date.month.to_bytes(1, 'big'))
+        payload += list(date.day.to_bytes(1, 'big'))
+        payload += list(date.hour.to_bytes(1, 'big'))
+        payload += list(date.minute.to_bytes(1, 'big'))
+        payload += list(date.second.to_bytes(1, 'big'))
 
         result = self.send_command(Command.SYNC_TIME, payload)
         if result != None:
-            year = int.from_bytes(result[:2])
-            month = int.from_bytes(result[2:3])
-            day = int.from_bytes(result[3:4])
-            hour = int.from_bytes(result[4:5])
-            minute = int.from_bytes(result[5:6])
-            second = int.from_bytes(result[6:7])
+            year = int.from_bytes(result[:2], 'big')
+            month = int.from_bytes(result[2:3], 'big')
+            day = int.from_bytes(result[3:4], 'big')
+            hour = int.from_bytes(result[4:5], 'big')
+            minute = int.from_bytes(result[5:6], 'big')
+            second = int.from_bytes(result[6:7], 'big')
             return datetime(year, month, day, hour, minute, second)
         else:
             return None
@@ -220,9 +221,6 @@ class MainViewModel():
         return result != None
 
     def ping_device(self):
-        #msg = [0xa1, 0xb2, 0xc3, 0xd4, 0x00, 0xe1, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
-        #assert dev.ctrl_transfer(0x40, 85, 0x00aa, 0, msg) == len(msg)
-        #ret = dev.ctrl_transfer(0xC0, 85, 0, 0, len(msg))[9:]
         result = self.send_command(Command.DEVICE_PING)
         return result != None and ''.join([chr(x) for x in result]) == 'ABCDE'
     
