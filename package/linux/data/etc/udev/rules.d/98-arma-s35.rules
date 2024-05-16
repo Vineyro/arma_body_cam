@@ -1,0 +1,5 @@
+# allow r/w access by users of the plugdev group
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="4255", ATTRS{idProduct}=="0001", GROUP="plugdev", MODE="0660"
+
+# allow r/w access by all users
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="4255", ATTRS{idProduct}=="0001", MODE="0660"

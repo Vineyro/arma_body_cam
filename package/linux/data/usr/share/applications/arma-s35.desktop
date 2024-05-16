@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=ARMA S3.5
+Type=Application
+NoDisplay=false
+Exec=/usr/local/bin/arma-s3.5/arma-s3.5
+Icon=/usr/local/bin/arma-s3.5/res/favicon.ico
+Hidden=false
+Terminal=false
+StartupNotify=false

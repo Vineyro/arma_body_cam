@@ -276,7 +276,7 @@ class FormWindow(QWidget):
 
         controls_row = QHBoxLayout()
         controls_row.addWidget(self.switch_mode_button)
-        controls_row.addWidget(self.format_tf_button)
+        #controls_row.addWidget(self.format_tf_button)
         controls_row.addWidget(self.logout_button)
 
         layout.addRow(controls_row)

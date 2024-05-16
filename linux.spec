@@ -13,8 +13,7 @@ a = Analysis(
     hooksconfig={},
     runtime_hooks=[],
     excludes=[],
-    noarchive=False,
-    optimize=0,
+    noarchive=False
 )
 pyz = PYZ(a.pure)
 
@@ -23,7 +22,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='ARMA-S3.5',
+    name='arma-s3.5',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -43,5 +42,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='ARMA-S3.5',
+    name='arma-s3.5',
 )
