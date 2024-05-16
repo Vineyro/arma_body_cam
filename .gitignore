@@ -1,3 +1,5 @@
 build
 dist
 src/__pycache__
+*.deb
+package/usr/local/bin
