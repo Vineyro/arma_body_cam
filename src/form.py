@@ -296,13 +296,13 @@ class FormWindow(QWidget):
 
     def sync_time(self):
         time = self.viewModel.sync_time()
-        self.time_text.setText(str(time))
-        return time
+        if time != None:
+            self.time_text.setText(str(time))
 
     def read_battery(self):
         battery = self.viewModel.read_battery()
-        self.battery_text.setText('%i%%'%(self.viewModel.read_battery()))
-        return battery
+        if battery != None:
+            self.battery_text.setText('%i%%'%(self.viewModel.read_battery()))
 
     def read_wifi_state(self):
         self.read_mode()
@@ -311,55 +311,54 @@ class FormWindow(QWidget):
 
     def read_mode(self):
         result = self.viewModel.read_wifi_mode()
-        self.wifi_mode.setCurrentIndex(result)
-        return result
+        if result != None:
+            self.wifi_mode.setCurrentIndex(result)
 
     def read_sta_ssid(self):
         result = self.viewModel.read_wifi_ssid()
-        self.wifi_ssid_text.setText(result)
-        return result
+        if result != None:
+            self.wifi_ssid_text.setText(result)
     
     def read_sta_password(self):
         result = self.viewModel.read_wifi_password()
-        self.wifi_password_text.setText(result)
-        return result
+        if result != None:
+            self.wifi_password_text.setText(result)
     
     def read_ip(self):
         result = self.viewModel.read_server_ip()
-        self.server_ip_text.setText(result)
-        return result
+        if result != None:
+            self.server_ip_text.setText(result)
     
     def read_port(self):
         result = self.viewModel.read_server_port()
-        self.server_port_text.setText(result)
-        return result
+        if result != None:
+            self.server_port_text.setText(result)
     
     def read_apn(self):
         result = self.viewModel.read_apn()
-        self.sim_apn_text.setText(result)
-        return result
+        if result != None:
+            self.sim_apn_text.setText(result)
 
     def read_pin(self):
         result = self.viewModel.read_sim_pin()
-        self.sim_pin_text.setText(result)
-        return result
+        if result != None:
+            self.sim_pin_text.setText(result)
     
     def read_resolution(self):
         result = self.viewModel.read_video_resolution()
-        self.video_resolution_text.setText(result)
-        return result
+        if result != None:
+            self.video_resolution_text.setText(result)
     
     def read_id(self):
 
         result = self.viewModel.read_cam_id()
 
-        self.camera_serial_text.setText(result[0])
-        self.user_id_text.setText(result[1])
-        self.user_name_text.setText(result[2])
-        self.dep_id_text.setText(result[3])
-        self.dep_name_text.setText(result[4])
-
-        return result
+        if result != None:
+            self.camera_serial_text.setText(result[0])
+            self.user_id_text.setText(result[1])
+            self.user_name_text.setText(result[2])
+            self.dep_id_text.setText(result[3])
+            self.dep_name_text.setText(result[4])
     
     def set_id(self):
         self.viewModel.write_cam_id(

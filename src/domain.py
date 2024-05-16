@@ -80,7 +80,10 @@ class MainViewModel():
         return num != 0x00
 
     def read_battery(self):
-        return self.send_command(Command.READ_BATTERY)[0]
+        try:
+            return self.send_command(Command.READ_BATTERY)[0]
+        except:
+                return None
     
     def sync_time(self):
 
@@ -109,48 +112,61 @@ class MainViewModel():
         return result != None
 
     def read_wifi_mode(self):
-        return self.send_command(Command.READ_WIFI_MODE)[0]
+        try:
+            result = self.send_command(Command.READ_WIFI_MODE)[0]
+        except:
+            return None
 
     def read_wifi_ssid(self):
-        result = filter(self.non_zero_filter, self.send_command(Command.READ_WIFI_SSID))
-        result = ''.join([chr(x) for x in result])
-        return result[:-1]
+        result = self.send_command(Command.READ_WIFI_SSID)
+        if result != None:
+            result = filter(self.non_zero_filter, result)
+            result = ''.join([chr(x) for x in result])
+            return result[:-1]
     
     def write_wifi_ssid(self, ssid):
         result = self.send_command(Command.WRITE_WIFI_SSID, [ord(x) for x in ssid])
         return result != None
     
     def read_wifi_password(self):
-        result = filter(self.non_zero_filter, self.send_command(Command.READ_WIFI_PASSWORD))
-        result = ''.join([chr(x) for x in result])
-        return result[:-1]
+        result = self.send_command(Command.READ_WIFI_PASSWORD)
+        if result != None:
+            result = filter(self.non_zero_filter, result)
+            result = ''.join([chr(x) for x in result])
+            return result[:-1]
     
     def write_wifi_password(self, password):
         result = self.send_command(Command.WRITE_WIFI_PASSWORD, [ord(x) for x in password])
         return result != None
     
     def read_video_resolution(self):
-        return resolution_dict[self.send_command(Command.READ_VIDEO_RESOLUTION)[-1]]
+        try:
+            return resolution_dict[self.send_command(Command.READ_VIDEO_RESOLUTION)[-1]]
+        except:
+                return None
 
     def read_cam_id(self):
-        ret = self.send_command(Command.READ_CAM_ID)
+        try:
+            ret = self.send_command(Command.READ_CAM_ID)
 
-        camera_sn_raw = filter(self.non_zero_filter, ret[0:7])
-        camera_sn = ''.join([chr(x) for x in camera_sn_raw])
+            camera_sn_raw = filter(self.non_zero_filter, ret[0:7])
+            camera_sn = ''.join([chr(x) for x in camera_sn_raw])
 
-        user_id_raw = filter(self.non_zero_filter, ret[9:16])
-        user_id = ''.join([chr(x) for x in user_id_raw])
+            user_id_raw = filter(self.non_zero_filter, ret[9:16])
+            user_id = ''.join([chr(x) for x in user_id_raw])
 
-        user_name_raw = filter(self.non_zero_filter, ret[17:33])
-        user_name = ''.join([chr(x) for x in user_name_raw])
+            user_name_raw = filter(self.non_zero_filter, ret[17:33])
+            user_name = ''.join([chr(x) for x in user_name_raw])
 
-        dep_id_raw = filter(self.non_zero_filter, ret[52:65])
-        dep_id = ''.join([chr(x) for x in dep_id_raw])
+            dep_id_raw = filter(self.non_zero_filter, ret[52:65])
+            dep_id = ''.join([chr(x) for x in dep_id_raw])
 
-        dep_name_raw = filter(self.non_zero_filter, ret[68:86])
-        dep_name = ''.join([chr(x) for x in dep_name_raw])
-        
-        return [camera_sn, user_id, user_name, dep_id, dep_name]
+            dep_name_raw = filter(self.non_zero_filter, ret[68:86])
+            dep_name = ''.join([chr(x) for x in dep_name_raw])
+            
+            return [camera_sn, user_id, user_name, dep_id, dep_name]
+        except:
+                return None
     
     def write_cam_id(self, camera_serial, user_id, user_name, dep_id, dep_name):
         msg = [ord(x) for x in camera_serial] + [0x00] * (9 - len(camera_serial))
@@ -163,36 +179,48 @@ class MainViewModel():
         return result != None
     
     def read_server_ip(self):
-        ret = filter(self.non_zero_filter, self.send_command(Command.READ_SERVER_IP))
-        result = ''.join([chr(x) for x in ret])
-        return result
+        try:
+            ret = filter(self.non_zero_filter, self.send_command(Command.READ_SERVER_IP))
+            result = ''.join([chr(x) for x in ret])
+            return result
+        except:
+                return None
     
     def write_server_ip(self, ip):
         result = self.send_command(Command.WRITE_SERVER_IP, [ord(x) for x in ip])
         return result != None
     
     def read_server_port(self):
-        result = filter(self.non_zero_filter, self.send_command(Command.READ_SERVER_PORT))
-        result = ''.join([chr(x) for x in result])
-        return result
+        try:
+            result = filter(self.non_zero_filter, self.send_command(Command.READ_SERVER_PORT))
+            result = ''.join([chr(x) for x in result])
+            return result
+        except:
+                return None
     
     def write_server_port(self, port):
         result = self.send_command(Command.WRITE_SERVER_PORT, [ord(x) for x in port])
         return result != None
     
     def read_apn(self):
-        result = filter(self.non_zero_filter, self.send_command(Command.READ_SIM_APN))
-        result = ''.join([chr(x) for x in result])
-        return result[:-1]
+        try:
+            result = filter(self.non_zero_filter, self.send_command(Command.READ_SIM_APN))
+            result = ''.join([chr(x) for x in result])
+            return result[:-1]
+        except:
+            return None
 
     def write_sim_apn(self, apn):
         result = self.send_command(Command.WRITE_SIM_APN, [ord(x) for x in apn])
         return result != None
 
     def read_sim_pin(self):
-        result = filter(self.non_zero_filter, self.send_command(Command.READ_SIM_PIN))
-        result = ''.join([chr(x) for x in result])
-        return result[:-1]
+        try:
+            result = filter(self.non_zero_filter, self.send_command(Command.READ_SIM_PIN))
+            result = ''.join([chr(x) for x in result])
+            return result[:-1]
+        except:
+            return None
     
     def write_sim_pin(self, pin):
         result = self.send_command(Command.WRITE_SIM_PIN, [ord(x) for x in pin])
@@ -231,6 +259,7 @@ class MainViewModel():
             assert self.dev.ctrl_transfer(0x40, 85, 0x00aa, 0, msg) == len(msg)
             ret = self.dev.ctrl_transfer(0xC0, 85, 0, 0, len(msg))
 
+            print(ret)
             print(command.name, ret[6] == 0x80)
 
             if ret[6] == 0x80:
